@@ -195,6 +195,7 @@ h3 {
 
 .form-control small {
     color: #e53935;
+    padding-left: 1.5rem;
 }
 
 .form-control.invalid input {
