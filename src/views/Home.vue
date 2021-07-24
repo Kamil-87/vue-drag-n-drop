@@ -31,17 +31,17 @@
         :key="column.id"
         @drop.prevent="onDrop($event, column.id)"
         @dragover.prevent
-        @dragenter.prevent>
-        <div
-          class="card"
-          :class="{move: isDraggable}"
+        @dragenter.prevent
+      >
+        <Card
           v-for="card in cardsByColumns(column)"
           :key="card.id"
-          @dragstart="onDragStart($event, card)"
-          :draggable="isDraggable">
-          <h3>{{ card.name }}</h3>
-          <p>{{ card.description }}</p>
-        </div>
+          :card="card"
+          :id="card.id"
+          :name="card.name"
+          :description="card.description"
+          :isDraggable="isDraggable"
+        />
       </div>
     </div>
 
@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import Card from "../components/Card";
+
 const initCards = [
     {
       id: 1,
@@ -74,12 +76,12 @@ const initCards = [
 
 export default {
   name: 'Home',
-  components: {},
+  components: {Card},
   data() {
     return {
       columns: [],
       cards: [],
-      isDraggable: true,
+      isDraggable: true
     }
   },
   mounted() {
@@ -101,6 +103,7 @@ export default {
     }
   },
   methods: {
+
     cardsByColumns(item) {
       return this.cards.filter(card => card.columnId === item.id)
     },
@@ -109,10 +112,6 @@ export default {
       this.$router.push('/create-card')
     },
 
-    onDragStart(e, item) {
-      e.dataTransfer.dropEffect = 'move'
-      e.dataTransfer.setData('cardId', item.id.toString())
-    },
     onDrop(e, columnsId) {
       const cardId = parseInt(e.dataTransfer.getData('cardId'))
       this.cards = this.cards.map(card => {
@@ -121,11 +120,6 @@ export default {
         }
         return card
       })
-    },
-
-    addToCards() {
-      const newCard = this.$route.params.formData
-      this.cards.push(newCard)
     },
 
     getStorage() {
@@ -175,23 +169,5 @@ export default {
   border: 1px dotted #2c3e50;
 }
 
-.card {
-  overflow: hidden;
-  height: 90px;
-  padding: 1rem;
-  margin-bottom: .5rem;
-  border-radius: 5px;
-  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  user-select: none;
-  cursor: pointer;
-}
 
-.card p, .card h3 {
-  overflow: hidden;
-}
-
-.move {
-  cursor: move;
-}
 </style>
