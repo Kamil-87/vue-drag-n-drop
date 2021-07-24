@@ -16,6 +16,7 @@
             type="checkbox"
             id="checkbox"
             class="checkbox"
+            v-model="isDraggable"
           >
         </div>
       </div>
@@ -26,14 +27,18 @@
     <div class="dashboard">
       <div
         class="col"
-        v-for="col in columns"
-        :key="col.id"
-      >
+        v-for="column in columns"
+        :key="column.id"
+        @drop.prevent="onDrop($event, column.id)"
+        @dragover.prevent
+        @dragenter.prevent>
         <div
           class="card"
-          v-for="card in cards"
+          :class="{move: isDraggable}"
+          v-for="card in cardsByColumns(column)"
           :key="card.id"
-        >
+          @dragstart="onDragStart($event, card)"
+          :draggable="isDraggable">
           <h3>{{ card.name }}</h3>
           <p>{{ card.description }}</p>
         </div>
@@ -48,13 +53,13 @@
 const initCards = [
     {
       id: 1,
-      title: 'Name',
+      name: 'Name',
       description: 'description',
       categoryId: 1
     },
     {
       id: 2,
-      title: 'Name',
+      name: 'Name',
       description: 'description',
       categoryId: 2
     },
@@ -73,22 +78,46 @@ export default {
   data() {
     return {
       columns: [],
-      cards: []
-    }
-  },
-  methods: {
-    createCard() {
-      this.$router.push('/create-card')
+      cards: [],
+      isDraggable: true,
     }
   },
   mounted() {
     this.columns = [...initColumns]
     this.cards = [...initCards]
-  }
+  },
+  computed: {
+
+  },
+  methods: {
+    cardsByColumns(item) {
+      return this.cards.filter(card => card.categoryId === item.id)
+    },
+
+    createCard() {
+      this.$router.push('/create-card')
+    },
+
+    onDragStart(e, item) {
+      e.dataTransfer.dropEffect = 'move'
+      e.dataTransfer.setData('cardId', item.id.toString())
+    },
+    onDrop(e, columnsId) {
+      const cardId = parseInt(e.dataTransfer.getData('cardId'))
+      this.cards = this.cards.map(card => {
+        if (card.id === cardId) {
+          card.categoryId = columnsId
+        }
+        return card
+      })
+    }
+  },
+
 }
 </script>
 
 <style scoped>
+
 .action-block {
   display: flex;
   justify-content: space-between;
@@ -97,9 +126,10 @@ export default {
 
 .dashboard {
   display: flex;
-  align-items: flex-start;
+  flex-wrap: wrap;
   justify-content: space-between;
   height: 100%;
+  min-height: 130px;
 }
 
 .col {
@@ -121,11 +151,15 @@ export default {
   border-radius: 5px;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
   background: #fff;
-  cursor: move;
   user-select: none;
+  cursor: pointer;
 }
+
 .card p, .card h3 {
   overflow: hidden;
 }
 
+.move {
+  cursor: move;
+}
 </style>
