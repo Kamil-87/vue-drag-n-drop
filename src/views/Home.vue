@@ -55,13 +55,13 @@ const initCards = [
       id: 1,
       name: 'Name',
       description: 'description',
-      categoryId: 1
+      columnId: 1
     },
     {
       id: 2,
       name: 'Name',
       description: 'description',
-      categoryId: 2
+      columnId: 2
     },
   ],
   initColumns = [
@@ -84,14 +84,25 @@ export default {
   },
   mounted() {
     this.columns = [...initColumns]
-    this.cards = [...initCards]
-  },
-  computed: {
 
+    let storedData = this.getStorage()
+    if (localStorage.getItem('cards') === null) {
+      this.cards = [...initCards]
+    } else {
+      this.cards = [...storedData]
+    }
+  },
+  watch: {
+    cards: {
+      handler() {
+        this.updateStorage()
+      },
+      deep: true
+    }
   },
   methods: {
     cardsByColumns(item) {
-      return this.cards.filter(card => card.categoryId === item.id)
+      return this.cards.filter(card => card.columnId === item.id)
     },
 
     createCard() {
@@ -106,10 +117,31 @@ export default {
       const cardId = parseInt(e.dataTransfer.getData('cardId'))
       this.cards = this.cards.map(card => {
         if (card.id === cardId) {
-          card.categoryId = columnsId
+          card.columnId = columnsId
         }
         return card
       })
+    },
+
+    addToCards() {
+      const newCard = this.$route.params.formData
+      this.cards.push(newCard)
+    },
+
+    getStorage() {
+      return JSON.parse(localStorage.getItem('cards'))
+    },
+    saveStorage() {
+      localStorage.setItem('cards', JSON.stringify(this.cards))
+    },
+    updateStorage() {
+      let storedData = this.getStorage()
+      if (!storedData) {
+        storedData = []
+      }
+
+      storedData = JSON.parse(JSON.stringify(this.cards))
+      this.saveStorage()
     }
   },
 

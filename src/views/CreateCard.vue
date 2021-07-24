@@ -58,11 +58,19 @@ export default {
       const formData = {
         id: Date.now(),
         name: this.name,
-        description: this.description
+        description: this.description,
+        columnId: 1
       }
-      console.log(formData)
-      // this.$router.push({name: 'Home'})
-    }
+
+      let cardList = this.getStorage()
+      cardList.push(formData)
+
+      localStorage.setItem('cards', JSON.stringify(cardList))
+      this.$router.push({name: 'Home' })
+    },
+    getStorage() {
+      return JSON.parse(localStorage.getItem('cards'))
+    },
   }
 }
 </script>
