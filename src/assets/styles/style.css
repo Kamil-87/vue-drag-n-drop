@@ -192,16 +192,6 @@ h3 {
     color: #5264AE;
 }
 
-
-.form-control small {
-    color: #e53935;
-    padding-left: 1.5rem;
-}
-
-.form-control.invalid input {
-    border-color: #e53935;
-}
-
 .form-control label {
     padding: 0 1.5rem;
     color: #999;
@@ -301,4 +291,20 @@ h3 {
     text-transform: uppercase;
 }
 
+.form-control small {
+    color: #e53935;
+    padding-left: 1.5rem;
+}
 
+.form-control.invalid input,
+.form-control.invalid textarea {
+    border-color: #e53935;
+}
+.form-control.invalid label,
+.form-control.invalid textarea {
+    color: #e53935;
+}
+.form-control.invalid input:focus ~ label, .form-control.invalid input:valid ~ label,
+.form-control.invalid textarea:focus ~ label, .form-control.invalid textarea:valid ~ label {
+    color: #e53935;
+}
