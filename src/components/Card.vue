@@ -5,10 +5,10 @@
       @close="closeModal"
     >
       <template v-slot:header>
-        {{ card.name }}
+        <h3 v-text="card.name"></h3>
       </template>
       <template v-slot:body>
-        {{ card.description }}
+        <p v-text="card.description"></p>
       </template>
     </Modal>
     <div
@@ -19,8 +19,8 @@
       :draggable="isDraggable"
       @click="showModal"
     >
-      <h3>{{ card.name }}</h3>
-      <p>{{ card.description }}</p>
+      <h3 v-text="card.name"></h3>
+      <p>{{ card.description | formattedText(30) }}</p>
     </div>
   </div>
 </template>
@@ -72,8 +72,8 @@ export default {
 <style scoped>
 .card {
   overflow: hidden;
-  height: 90px;
-  padding: 1rem;
+  height: 100px;
+  padding: .5rem 1rem;
   margin-bottom: .5rem;
   border-radius: 5px;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);

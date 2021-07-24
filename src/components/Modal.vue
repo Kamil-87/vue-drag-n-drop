@@ -83,8 +83,9 @@ export default {
   flex-direction: column;
   min-width: 300px;
   width: 100%;
-  max-width: 600px;
-  border-radius: 10px;
+  max-width: 500px;
+  min-height: 150px;
+  border-radius: 5px;
 }
 
 .modal-header {

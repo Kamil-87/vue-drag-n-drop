@@ -62,7 +62,7 @@ const initCards = [
     {
       id: 2,
       name: 'Name',
-      description: 'description',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium animi assumenda eaque ipsam provident quam quos, reiciendis sequi vel. Dolorum, fugit iusto! Ab assumenda, at blanditiis iure, natus nemo non nulla officia ratione recusandae repellat sit, tempora ut voluptatem.',
       columnId: 2
     },
   ],
