@@ -1,24 +1,23 @@
-# vue-drag-n-drop
+# vue-drag-n-drop Редактируемый dashboard
 
-## Project setup
+## Ссылка на Github Pages
+```
+https://kamil-87.github.io/vue-drag-n-drop
+```
+
+##Запуск программы
+
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Технологический стек
+- Vue
+- HTML5/CSS3
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Демо
+
+![Demo](https://github.com/Kamil-87/vue-drag-n-drop/raw/master/gif/DnD.gif)
+
