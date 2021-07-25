@@ -129,12 +129,7 @@ export default {
       localStorage.setItem('cards', JSON.stringify(this.cards))
     },
     updateStorage() {
-      let storedData = this.getStorage()
-      if (!storedData) {
-        storedData = []
-      }
-
-      storedData = JSON.parse(JSON.stringify(this.cards))
+      this.getStorage()
       this.saveStorage()
     }
   },

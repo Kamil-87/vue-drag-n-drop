@@ -106,6 +106,7 @@ export default {
 .btn-close {
   border: none;
   font-size: 20px;
+  padding: 5px;
   cursor: pointer;
   font-weight: bold;
   color: #4AAE9B;
