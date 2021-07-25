@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import CreateCard from '../views/CreateCard.vue'
+import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -15,7 +16,12 @@ const routes = [
     path: '/create-card',
     name: 'CreateCard',
     component: CreateCard
-  }
+  },
+  {
+    path: '/*',
+    name: 'notFound',
+    component: NotFound
+  },
 ]
 
 let mode = 'history'
